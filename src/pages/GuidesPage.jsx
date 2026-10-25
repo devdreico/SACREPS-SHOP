@@ -1,0 +1,10 @@
+import { useState } from 'react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
+import { GUIDES } from '../data.js';
+
+export default function GuidesPage() {
+  const [active, setActive] = useState('Todo');
+  const categories = ['Todo', ...new Set(GUIDES.map((guide) => guide.category))];
+  const guides = active === 'Todo' ? GUIDES : GUIDES.filter((guide) => guide.category === active);
+  return <div className="page-shell guides-page"><section className="page-hero page-hero-guides"><span className="eyebrow eyebrow-light">SACREPS KNOWLEDGE</span><h1>Entrena con<br /><em>criterio.</em></h1><p>Guías prácticas para moverte mejor, cuidar tu proceso y aprender en el camino.</p></section><section className="page-section wiki-section"><div className="section-title"><div><span className="eyebrow">WIKI SACREPS</span><h2>Ideas para llevarte <em>más lejos.</em></h2></div><p>Contenido educativo general. Para indicaciones personales, consulta un profesional.</p></div><div className="wiki-filters">{categories.map((category) => <button className={active === category ? 'category-chip is-active' : 'category-chip'} onClick={() => setActive(category)} key={category}>{category}</button>)}</div><div className="wiki-grid">{guides.map((guide, index) => <article className="wiki-card glass-panel" key={guide.title}><div className="wiki-image"><img src={guide.image} alt="" loading="lazy" /><span>{String(index + 1).padStart(2, '0')} / {guide.time}</span></div><div className="wiki-content"><span className="eyebrow">{guide.category}</span><h3>{guide.title}</h3><p>{guide.summary}</p><details><summary>Leer recomendaciones <ChevronDown size={15} /></summary><ol>{guide.steps.map((step) => <li key={step}>{step}</li>)}</ol></details></div></article>)}</div><div className="health-note"><span>!</span><p>Las guías no son diagnóstico ni prescripción. Suspende el ejercicio ante dolor o malestar y busca orientación médica cuando lo necesites.</p><ArrowRight size={18} /></div></section></div>;
+}

@@ -1,0 +1,28 @@
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Compass, Dumbbell, HeartPulse, MapPinned, MoveUpRight, Newspaper, ShoppingBag, Sparkles } from 'lucide-react';
+import { Link, useOutletContext } from 'react-router-dom';
+import ProductCard from '../components/ProductCard.jsx';
+import { PRODUCTS } from '../data.js';
+
+const destinations = [
+  { number: '01', label: 'Tienda', title: 'Prepara tu próximo nivel.', copy: 'Suplementos, nutrición y equipo para lo que te mueve.', to: '/tienda', icon: ShoppingBag, tone: 'wine' },
+  { number: '02', label: 'Gimnasios', title: 'Tu lugar. Tu comunidad.', copy: 'Explora nuestros 11 puntos en Bogotá y la Sabana.', to: '/sedes', icon: MapPinned, tone: 'lime' },
+  { number: '03', label: 'Wiki', title: 'Entrena con información.', copy: 'Guías sencillas para hacer de cada sesión un avance.', to: '/guias', icon: Compass, tone: 'blue' },
+];
+
+export default function HomePage() {
+  const { onAddProduct } = useOutletContext();
+  return <div className="home-page">
+    <section className="home-hero">
+      <video className="home-hero-video" autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1900&q=85"><source src="/sacreps-gym-hero.mp4" type="video/mp4" /></video><div className="hero-tint" />
+      <div className="hero-grid"><div className="hero-content"><span className="eyebrow eyebrow-light"><i /> EL MOVIMIENTO ES NUESTRO PUNTO DE PARTIDA</span><h1>Haz espacio<br />para <em>avanzar.</em></h1><p>Entrenamiento, herramientas y comunidad para llevar tu energía un paso más allá.</p><div className="hero-ctas"><Link className="button button-light" to="/tienda">Explorar la tienda <ArrowRight size={16} /></Link><Link className="hero-discover" to="/nosotros">Conoce SACREPS <ArrowDownRight size={16} /></Link></div></div>
+        <div className="hero-side glass-panel"><span className="orbit-mark"><Dumbbell size={19} /></span><span className="micro-label">TRAINING CULTURE</span><strong>Muévete.<br />Construye.<br /><em>Repite.</em></strong><span className="hero-index">01 / SACREPS</span></div></div>
+      <div className="hero-bottom"><span><i className="live-dot" /> UNA CULTURA EN MOVIMIENTO</span><span>BOGOTÁ · SABANA · COLOMBIA</span><Link to="/sedes">Encuentra tu sede <MoveUpRight size={14} /></Link></div>
+    </section>
+    <section className="quick-facts"><div><span>01</span><strong>Envío gratis</strong><small>En todo Colombia</small></div><div><span>02</span><strong>En 1 o 2 días</strong><small>Hasta tu puerta</small></div><div><span>03</span><strong>Contra entrega</strong><small>Pagas al recibir</small></div><div className="quick-facts-end"><Sparkles size={18} /><p>Una tienda.<br /><b>Muchos caminos para avanzar.</b></p></div></section>
+    <section className="destination-section page-section"><div className="section-title"><div><span className="eyebrow">EXPLORA EL UNIVERSO SACREPS</span><h2>Un lugar para <em>cada objetivo.</em></h2></div><p>Conoce los espacios, el conocimiento y las herramientas que hacen parte de nuestra cultura.</p></div><div className="destination-grid">{destinations.map(({ number, label, title, copy, to, icon: Icon, tone }) => <Link className={`destination-card glass-panel tone-${tone}`} to={to} key={number}><span className="destination-top"><span>{number} / {label}</span><Icon size={20} /></span><h3>{title}</h3><p>{copy}</p><span className="card-link">Explorar <ArrowUpRight size={15} /></span><span className="destination-watermark">{number}</span></Link>)}</div></section>
+    <section className="feature-products page-section"><div className="section-title"><div><span className="eyebrow">SELECCIÓN SACREPS</span><h2>El equipo para <em>seguir.</em></h2></div><Link className="text-link" to="/tienda">Ver todo <ArrowRight size={16} /></Link></div><div className="product-grid home-product-grid">{PRODUCTS.slice(0, 4).map((product) => <ProductCard key={product.id} product={product} onAdd={onAddProduct} />)}</div></section>
+    <section className="home-split"><div className="split-image"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1300&q=85" alt="Entrenamiento en gimnasio" loading="lazy" /><span>ESTO ES MÁS QUE ENTRENAR</span></div><div className="split-copy glass-panel"><span className="eyebrow">COMUNIDAD SACREPS</span><h2>Crece junto a quienes también <em>se mueven.</em></h2><p>Entrena en nuestros gimnasios, comparte ideas, aprende y forma parte de una cultura que no se queda quieta.</p><Link className="button button-primary" to="/comunidad">Forma parte <ArrowRight size={16} /></Link><div className="split-stats"><span><b>11</b> puntos referenciales</span><span><b>1</b> comunidad en movimiento</span></div></div></section>
+    <section className="service-ribbon"><div><HeartPulse size={20} /><span><b>Tu bienestar también importa.</b><small>Conoce el servicio de salud SANIVER.</small></span></div><a href="https://saniver.presentto.online" target="_blank" rel="noreferrer">Visitar SANIVER <ArrowUpRight size={16} /></a><Newspaper className="ribbon-watermark" size={100} /></section>
+    <section className="home-closing page-section"><span className="eyebrow">SACREPS · COLOMBIA</span><h2>El siguiente paso<br />también puede ser <em>tuyo.</em></h2><Link className="button button-light" to="/contacto">Hablemos <ArrowRight size={16} /></Link><Compass className="closing-mark" size={116} strokeWidth={0.7} /></section>
+  </div>;
+}
